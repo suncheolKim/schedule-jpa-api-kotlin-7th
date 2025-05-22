@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: schedule-jpa-api
+
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.1.20:3306/sparta
+        username: ${db-user}
+        password: ${db-password}
+
+    jpa:
+        hibernate:
+            ddl-auto: none
+        database-platform: org.hibernate.dialect.MySQLDialect
