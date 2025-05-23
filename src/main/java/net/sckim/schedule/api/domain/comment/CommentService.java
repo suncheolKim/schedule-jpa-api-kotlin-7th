@@ -39,20 +39,30 @@ public class CommentService {
                 .build();
         final Comment savedComment = commentRepository.save(newComment);
 
-        return CommentResponse.of(savedComment);
+        return CommentResponse.of(savedComment, scheduleId, userId, user.getName());
     }
 
     public CommentResponse getComment(Long commentId) {
         final Comment comment = getCommentOrThrow(commentId);
 
-        return CommentResponse.of(comment);
+        return CommentResponse.of(
+                comment,
+                comment.getSchedule().getId(),
+                comment.getUser().getId(),
+                comment.getUser().getName()
+        );
     }
 
     public List<CommentResponse> getAllComment() {
         final List<Comment> comments = commentRepository.findAll();
 
         return comments.stream()
-                .map(CommentResponse::of)
+                .map((Comment comment) -> CommentResponse.of(
+                        comment,
+                        comment.getSchedule().getId(),
+                        comment.getUser().getId(),
+                        comment.getUser().getName()
+                ))
                 .toList();
     }
 
@@ -64,7 +74,12 @@ public class CommentService {
 
         final Comment savedComment = commentRepository.save(comment);
 
-        return CommentResponse.of(savedComment);
+        return CommentResponse.of(
+                savedComment,
+                savedComment.getSchedule().getId(),
+                savedComment.getUser().getId(),
+                savedComment.getUser().getName()
+        );
     }
 
     @Transactional

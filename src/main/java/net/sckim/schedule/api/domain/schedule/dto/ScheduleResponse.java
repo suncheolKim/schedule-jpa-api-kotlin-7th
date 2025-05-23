@@ -9,16 +9,18 @@ import java.time.LocalDateTime;
 public class ScheduleResponse {
     private Long id;
     private Long userId;
+    private String userName;
     private String title;
     private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public static ScheduleResponse of(Schedule schedule) {
+    public static ScheduleResponse of(Schedule schedule, Long userId, String userName) {
         final ScheduleResponse response = new ScheduleResponse();
 
         response.id = schedule.getId();
-        response.userId = schedule.getUserId();
+        response.userId = userId;
+        response.userName = userName;
         response.title = schedule.getTitle();
         response.contents = schedule.getContents();
         response.createdAt = schedule.getCreatedAt();
