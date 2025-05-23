@@ -2,7 +2,9 @@ package net.sckim.schedule.api.domain.schedule;
 
 import jakarta.persistence.EntityNotFoundException;
 import net.sckim.schedule.api.domain.comment.CommentRepository;
+import net.sckim.schedule.api.domain.comment.dto.CommentResponse;
 import net.sckim.schedule.api.domain.comment.entity.Comment;
+import net.sckim.schedule.api.domain.schedule.dto.ScheduleAndCommentsResponse;
 import net.sckim.schedule.api.domain.schedule.dto.SchedulePageResponse;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
 import net.sckim.schedule.api.domain.schedule.entity.Schedule;
@@ -112,6 +114,17 @@ public class ScheduleService {
 
         // SchedulePageResponse를 조합하여 리턴
         return schedulePage.map(schedule -> SchedulePageResponse.of(schedule, commentCountMap.getOrDefault(schedule.getId(), 0L)));
+    }
+
+    public ScheduleAndCommentsResponse getScheduleWithComments(Long scheduleId) {
+        final ScheduleResponse schedule = getSchedule(scheduleId);
+
+        final List<Comment> commentList = commentRepository.findAllByScheduleId(scheduleId);
+        final List<CommentResponse> commentResponseList = commentList.stream()
+                .map(comment -> CommentResponse.of(comment, scheduleId, comment.getUser().getId(), comment.getUser().getName()))
+                .toList();
+
+        return ScheduleAndCommentsResponse.of(schedule, commentResponseList);
     }
 }
 

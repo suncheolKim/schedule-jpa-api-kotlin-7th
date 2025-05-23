@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import net.sckim.schedule.api.domain.schedule.dto.CreateScheduleRequest;
 import net.sckim.schedule.api.domain.schedule.dto.EditScheduleRequest;
+import net.sckim.schedule.api.domain.schedule.dto.ScheduleAndCommentsResponse;
 import net.sckim.schedule.api.domain.schedule.dto.SchedulePageResponse;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,11 @@ public class ScheduleController {
     @GetMapping("/schedules/{scheduleId}")
     public ScheduleResponse getSchedule(@PathVariable Long scheduleId) {
         return scheduleService.getSchedule(scheduleId);
+    }
+
+    @GetMapping("/schedules/{scheduleId}/comments")
+    public ScheduleAndCommentsResponse getScheduleWithComments(@PathVariable Long scheduleId) {
+        return scheduleService.getScheduleWithComments(scheduleId);
     }
 
     @GetMapping("/schedules")
