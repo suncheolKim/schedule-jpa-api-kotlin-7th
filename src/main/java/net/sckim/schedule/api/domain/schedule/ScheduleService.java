@@ -3,6 +3,7 @@ package net.sckim.schedule.api.domain.schedule;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
 import net.sckim.schedule.api.domain.schedule.entity.Schedule;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
+    @Transactional
     public ScheduleResponse createSchedule(String name, String title, String contents) {
         final Schedule newSchedule = new Schedule(name, title, contents);
         final Schedule savedSchedule = scheduleRepository.save(newSchedule);
@@ -36,6 +38,7 @@ public class ScheduleService {
                 .toList();
     }
 
+    @Transactional
     public ScheduleResponse editSchedule(Long scheduleId, String name, String title, String contents) {
         final Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
@@ -47,6 +50,7 @@ public class ScheduleService {
         return ScheduleResponse.of(savedSchedule);
     }
 
+    @Transactional
     public void deleteSchedule(Long scheduleId) {
         final Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
