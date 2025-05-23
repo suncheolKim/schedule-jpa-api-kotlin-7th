@@ -28,8 +28,7 @@ public class ScheduleService {
     }
 
     public ScheduleResponse getSchedule(Long scheduleId) {
-        final Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
+        final Schedule schedule = getScheduleOrThrow(scheduleId);
 
         return ScheduleResponse.of(schedule);
     }
@@ -44,8 +43,7 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleResponse editSchedule(Long scheduleId, String name, String title, String contents) {
-        final Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
+        final Schedule schedule = getScheduleOrThrow(scheduleId);
 
         schedule.edit(name, title, contents);
 
@@ -56,9 +54,13 @@ public class ScheduleService {
 
     @Transactional
     public void deleteSchedule(Long scheduleId) {
-        final Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
+        final Schedule schedule = getScheduleOrThrow(scheduleId);
 
         scheduleRepository.delete(schedule);
+    }
+
+    private Schedule getScheduleOrThrow(Long scheduleId) {
+        return scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
     }
 }
