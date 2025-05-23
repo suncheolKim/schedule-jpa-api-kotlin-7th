@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.sckim.schedule.api.domain.common.BaseEntity;
+import org.apache.logging.log4j.util.Strings;
 
 @Entity
 @Getter
@@ -32,5 +33,19 @@ public class Schedule extends BaseEntity {
         this.name = name;
         this.title = title;
         this.contents = contents;
+    }
+
+    public void edit(String name, String title, String contents) {
+        if (Strings.isNotBlank(name)) {
+            this.name = name;
+        }
+
+        if (Strings.isNotBlank(title)) {
+            this.title = title;
+        }
+
+        if (Strings.isNotBlank(contents)) {
+            this.contents = contents;
+        }
     }
 }

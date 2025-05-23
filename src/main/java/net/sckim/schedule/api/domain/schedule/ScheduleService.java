@@ -4,9 +4,7 @@ import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
 import net.sckim.schedule.api.domain.schedule.entity.Schedule;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScheduleService {
@@ -36,5 +34,16 @@ public class ScheduleService {
         return schedules.stream()
                 .map(ScheduleResponse::of)
                 .toList();
+    }
+
+    public ScheduleResponse editSchedule(Long scheduleId, String name, String title, String contents) {
+        final Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
+
+        schedule.edit(name, title, contents);
+
+        final Schedule savedSchedule = scheduleRepository.save(schedule);
+
+        return ScheduleResponse.of(savedSchedule);
     }
 }
