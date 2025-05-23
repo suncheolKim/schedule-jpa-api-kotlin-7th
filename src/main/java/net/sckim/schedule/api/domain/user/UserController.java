@@ -26,7 +26,7 @@ public class UserController {
 
     @PostMapping("/users")
     public UserResponse createUser(@RequestBody CreateUserRequest request) {
-        return userService.createUser(request.getName(), request.getEmail());
+        return userService.createUser(request.getName(), request.getEmail(), request.getPassword());
     }
 
     @GetMapping("/users/{userId}")

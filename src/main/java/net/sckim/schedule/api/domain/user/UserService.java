@@ -16,10 +16,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse createUser(String name, String email) {
+    public UserResponse createUser(String name, String email, String password) {
         final User newUser = User.builder()
                 .name(name)
                 .email(email)
+                .password(password)
                 .build();
 
         final User createdUser = userRepository.save(newUser);
