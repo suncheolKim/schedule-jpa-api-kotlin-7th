@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ScheduleController {
@@ -26,5 +28,10 @@ public class ScheduleController {
     @GetMapping("/schedules/{scheduleId}")
     public ScheduleResponse getSchedule(@PathVariable Long scheduleId) {
         return scheduleService.getSchedule(scheduleId);
+    }
+
+    @GetMapping("/schedules")
+    public List<ScheduleResponse> getAllSchedules() {
+        return scheduleService.getAllSchedule();
     }
 }

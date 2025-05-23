@@ -5,6 +5,7 @@ import net.sckim.schedule.api.domain.schedule.entity.Schedule;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,13 @@ public class ScheduleService {
                 .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
 
         return ScheduleResponse.of(schedule);
+    }
+
+    public List<ScheduleResponse> getAllSchedule() {
+        final List<Schedule> schedules = scheduleRepository.findAll();
+
+        return schedules.stream()
+                .map(ScheduleResponse::of)
+                .toList();
     }
 }
