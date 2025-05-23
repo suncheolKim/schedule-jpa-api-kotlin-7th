@@ -1,5 +1,6 @@
 package net.sckim.schedule.api.domain.user;
 
+import net.sckim.schedule.api.domain.security.PasswordEncoder;
 import net.sckim.schedule.api.domain.user.dto.LoginResponse;
 import net.sckim.schedule.api.domain.user.dto.UserResponse;
 import net.sckim.schedule.api.domain.user.entity.User;
@@ -12,17 +13,21 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public UserResponse createUser(String name, String email, String password) {
+        final String encodedPassword = passwordEncoder.encode(password);
+
         final User newUser = User.builder()
                 .name(name)
                 .email(email)
-                .password(password)
+                .password(encodedPassword)
                 .build();
 
         final User createdUser = userRepository.save(newUser);
@@ -70,7 +75,8 @@ public class UserService {
         final User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found. email = " + email));
 
-        if (!user.getPassword().equals(password)) {
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new PasswordMismatchedException("Password is incorrect. email = " + email);
         }
 
