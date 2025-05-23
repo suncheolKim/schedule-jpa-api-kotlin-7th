@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ScheduleResponse {
     private Long id;
-    private String name;
+    private Long userId;
     private String title;
     private String contents;
     private LocalDateTime createdAt;
@@ -18,7 +18,7 @@ public class ScheduleResponse {
         final ScheduleResponse response = new ScheduleResponse();
 
         response.id = schedule.getId();
-        response.name = schedule.getName();
+        response.userId = schedule.getUserId();
         response.title = schedule.getTitle();
         response.contents = schedule.getContents();
         response.createdAt = schedule.getCreatedAt();

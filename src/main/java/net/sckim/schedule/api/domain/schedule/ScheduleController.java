@@ -26,7 +26,7 @@ public class ScheduleController {
 
     @PostMapping("/schedules")
     public ScheduleResponse createSchedule(@RequestBody CreateScheduleRequest request) {
-        return scheduleService.createSchedule(request.getName(), request.getTitle(), request.getContents());
+        return scheduleService.createSchedule(request.getUserId(), request.getTitle(), request.getContents());
     }
 
     @GetMapping("/schedules/{scheduleId}")

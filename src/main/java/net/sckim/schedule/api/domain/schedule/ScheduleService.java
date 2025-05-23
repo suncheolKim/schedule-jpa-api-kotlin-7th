@@ -16,9 +16,9 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResponse createSchedule(String name, String title, String contents) {
+    public ScheduleResponse createSchedule(Long userId, String title, String contents) {
         final Schedule newSchedule = Schedule.builder()
-                .name(name)
+                .userId(userId)
                 .title(title)
                 .contents(contents)
                 .build();
@@ -45,7 +45,7 @@ public class ScheduleService {
     public ScheduleResponse editSchedule(Long scheduleId, String name, String title, String contents) {
         final Schedule schedule = getScheduleOrThrow(scheduleId);
 
-        schedule.edit(name, title, contents);
+        schedule.edit(title, contents);
 
         final Schedule savedSchedule = scheduleRepository.save(schedule);
 

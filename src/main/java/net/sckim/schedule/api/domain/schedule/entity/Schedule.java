@@ -22,7 +22,7 @@ public class Schedule extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private Long userId;
 
     @Column(nullable = false)
     private String title;
@@ -31,17 +31,13 @@ public class Schedule extends BaseEntity {
     private String contents;
 
     @Builder
-    private Schedule(String name, String title, String contents) {
-        this.name = name;
+    private Schedule(Long userId, String title, String contents) {
+        this.userId = userId;
         this.title = title;
         this.contents = contents;
     }
 
-    public void edit(String name, String title, String contents) {
-        if (Strings.isNotBlank(name)) {
-            this.name = name;
-        }
-
+    public void edit(String title, String contents) {
         if (Strings.isNotBlank(title)) {
             this.title = title;
         }
