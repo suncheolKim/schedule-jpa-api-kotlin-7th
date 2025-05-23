@@ -5,6 +5,7 @@ import net.sckim.schedule.api.domain.schedule.entity.Schedule;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class ScheduleService {
@@ -19,5 +20,12 @@ public class ScheduleService {
         final Schedule savedSchedule = scheduleRepository.save(newSchedule);
 
         return ScheduleResponse.of(savedSchedule);
+    }
+
+    public ScheduleResponse getSchedule(Long scheduleId) {
+        final Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
+
+        return ScheduleResponse.of(schedule);
     }
 }

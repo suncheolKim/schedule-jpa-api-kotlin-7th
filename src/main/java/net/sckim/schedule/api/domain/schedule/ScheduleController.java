@@ -2,6 +2,8 @@ package net.sckim.schedule.api.domain.schedule;
 
 import net.sckim.schedule.api.domain.schedule.dto.CreateScheduleRequest;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,5 +21,10 @@ public class ScheduleController {
     @PostMapping("/schedules")
     public ScheduleResponse createSchedule(@RequestBody CreateScheduleRequest request) {
         return scheduleService.createSchedule(request.getName(), request.getTitle(), request.getContents());
+    }
+
+    @GetMapping("/schedules/{scheduleId}")
+    public ScheduleResponse getSchedule(@PathVariable Long scheduleId) {
+        return scheduleService.getSchedule(scheduleId);
     }
 }
