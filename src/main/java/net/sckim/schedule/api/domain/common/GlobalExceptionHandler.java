@@ -1,5 +1,6 @@
 package net.sckim.schedule.api.domain.common;
 
+import net.sckim.schedule.api.domain.user.exception.PasswordMismatchedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,5 +19,10 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining("\n"));
 
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = PasswordMismatchedException.class)
+    public ResponseEntity<String> handleException(PasswordMismatchedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }

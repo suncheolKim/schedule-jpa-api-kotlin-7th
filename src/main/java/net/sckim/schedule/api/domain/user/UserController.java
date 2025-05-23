@@ -80,9 +80,4 @@ public class UserController {
 
         return ResponseEntity.ok().build();
     }
-
-    @ExceptionHandler
-    public ResponseEntity<String> handleException(PasswordMismatchedException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
 }
