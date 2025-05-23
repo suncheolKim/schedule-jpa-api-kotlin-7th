@@ -1,5 +1,6 @@
 package net.sckim.schedule.api.domain.user;
 
+import net.sckim.schedule.api.domain.user.dto.LoginResponse;
 import net.sckim.schedule.api.domain.user.dto.UserResponse;
 import net.sckim.schedule.api.domain.user.entity.User;
 import org.springframework.stereotype.Service;
@@ -62,5 +63,16 @@ public class UserService {
         // 이 경우는 미존재 userId로 요청하더라도 아무런 에러 없이 정상 처리 됨
         // 미존재 데이터에 대한 예외처리나 확인이 필요 없다면 이렇게 처리해도 무방하다.
         userRepository.deleteById(userId);
+    }
+
+    public LoginResponse login(String email, String password) {
+        final User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found. email = " + email));
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Password is incorrect. email = " + email);
+        }
+
+        return LoginResponse.of(user);
     }
 }
