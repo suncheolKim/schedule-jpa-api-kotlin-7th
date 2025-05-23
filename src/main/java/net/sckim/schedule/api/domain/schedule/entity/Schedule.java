@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.sckim.schedule.api.domain.common.BaseEntity;
@@ -29,7 +30,8 @@ public class Schedule extends BaseEntity {
     @Column(nullable = false)
     private String contents;
 
-    public Schedule(String name, String title, String contents) {
+    @Builder
+    private Schedule(String name, String title, String contents) {
         this.name = name;
         this.title = title;
         this.contents = contents;

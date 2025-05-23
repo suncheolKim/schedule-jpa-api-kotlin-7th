@@ -17,7 +17,11 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleResponse createSchedule(String name, String title, String contents) {
-        final Schedule newSchedule = new Schedule(name, title, contents);
+        final Schedule newSchedule = Schedule.builder()
+                .name(name)
+                .title(title)
+                .contents(contents)
+                .build();
         final Schedule savedSchedule = scheduleRepository.save(newSchedule);
 
         return ScheduleResponse.of(savedSchedule);
