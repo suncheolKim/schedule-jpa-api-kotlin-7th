@@ -6,9 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.sckim.schedule.api.domain.common.BaseEntity;
+import org.apache.logging.log4j.util.Strings;
 
 @Entity
 @Getter
@@ -24,4 +26,20 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String email;
+
+    @Builder
+    private User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public void edit(String name, String email) {
+        if (Strings.isNotBlank(name)) {
+            this.name = name;
+        }
+
+        if (Strings.isNotBlank(email)) {
+            this.email = email;
+        }
+    }
 }
