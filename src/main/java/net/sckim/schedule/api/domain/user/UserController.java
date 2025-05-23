@@ -8,8 +8,11 @@ import net.sckim.schedule.api.domain.user.dto.EditUserRequest;
 import net.sckim.schedule.api.domain.user.dto.LoginRequest;
 import net.sckim.schedule.api.domain.user.dto.LoginResponse;
 import net.sckim.schedule.api.domain.user.dto.UserResponse;
+import net.sckim.schedule.api.domain.user.exception.PasswordMismatchedException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,5 +78,10 @@ public class UserController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleException(PasswordMismatchedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }

@@ -3,6 +3,7 @@ package net.sckim.schedule.api.domain.user;
 import net.sckim.schedule.api.domain.user.dto.LoginResponse;
 import net.sckim.schedule.api.domain.user.dto.UserResponse;
 import net.sckim.schedule.api.domain.user.entity.User;
+import net.sckim.schedule.api.domain.user.exception.PasswordMismatchedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,7 +71,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found. email = " + email));
 
         if (!user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("Password is incorrect. email = " + email);
+            throw new PasswordMismatchedException("Password is incorrect. email = " + email);
         }
 
         return LoginResponse.of(user);
