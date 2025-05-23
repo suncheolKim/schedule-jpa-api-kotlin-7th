@@ -2,6 +2,7 @@ package net.sckim.schedule.api.domain.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import net.sckim.schedule.api.domain.security.SessionType;
 import net.sckim.schedule.api.domain.user.dto.CreateUserRequest;
 import net.sckim.schedule.api.domain.user.dto.EditUserRequest;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public UserResponse createUser(@RequestBody CreateUserRequest request) {
+    public UserResponse createUser(@RequestBody @Valid CreateUserRequest request) {
         return userService.createUser(request.getName(), request.getEmail(), request.getPassword());
     }
 
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}")
-    public UserResponse updateUser(@PathVariable Long userId, @RequestBody EditUserRequest request) {
+    public UserResponse updateUser(@PathVariable Long userId, @RequestBody @Valid EditUserRequest request) {
         return userService.editUser(userId, request.getName(), request.getEmail());
     }
 
@@ -60,7 +61,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest, HttpServletRequest servletRequest) {
+    public ResponseEntity<Object> login(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest servletRequest) {
         final LoginResponse loginResponse = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
 
         final HttpSession session = servletRequest.getSession();

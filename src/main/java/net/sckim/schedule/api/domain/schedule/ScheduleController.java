@@ -1,5 +1,6 @@
 package net.sckim.schedule.api.domain.schedule;
 
+import jakarta.validation.Valid;
 import net.sckim.schedule.api.domain.schedule.dto.CreateScheduleRequest;
 import net.sckim.schedule.api.domain.schedule.dto.EditScheduleRequest;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
@@ -25,7 +26,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedules")
-    public ScheduleResponse createSchedule(@RequestBody CreateScheduleRequest request) {
+    public ScheduleResponse createSchedule(@RequestBody @Valid CreateScheduleRequest request) {
         return scheduleService.createSchedule(request.getUserId(), request.getTitle(), request.getContents());
     }
 
@@ -40,7 +41,7 @@ public class ScheduleController {
     }
 
     @PutMapping("/schedules/{scheduleId}")
-    public ScheduleResponse updateSchedule(@PathVariable Long scheduleId, @RequestBody EditScheduleRequest request) {
+    public ScheduleResponse updateSchedule(@PathVariable Long scheduleId, @RequestBody @Valid EditScheduleRequest request) {
         return scheduleService.editSchedule(scheduleId, request.getTitle(), request.getContents());
     }
 
