@@ -15,9 +15,7 @@ public class ScheduleService {
     }
 
     public ScheduleResponse createSchedule(String name, String title, String contents) {
-        final LocalDateTime now = LocalDateTime.now();
-
-        final Schedule newSchedule = new Schedule(name, title, contents, now, now);
+        final Schedule newSchedule = new Schedule(name, title, contents);
         final Schedule savedSchedule = scheduleRepository.save(newSchedule);
 
         return ScheduleResponse.of(savedSchedule);
