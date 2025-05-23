@@ -1,8 +1,12 @@
 package net.sckim.schedule.api.domain.schedule;
 
 import jakarta.persistence.EntityNotFoundException;
+import net.sckim.schedule.api.domain.schedule.dto.SchedulePageResponse;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
 import net.sckim.schedule.api.domain.schedule.entity.Schedule;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,4 +68,11 @@ public class ScheduleService {
         return scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new EntityNotFoundException("Schedule not found. id = " + scheduleId));
     }
+
+    public Page<SchedulePageResponse> getSchedulePages(Pageable pageable) {
+        final Page<Schedule> schedulePage = scheduleRepository.findAll(pageable);
+        return schedulePage.map(SchedulePageResponse::of);
+    }
 }
+
+

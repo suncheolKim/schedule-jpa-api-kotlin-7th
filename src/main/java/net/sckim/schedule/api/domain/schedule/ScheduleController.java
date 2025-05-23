@@ -1,9 +1,15 @@
 package net.sckim.schedule.api.domain.schedule;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import net.sckim.schedule.api.domain.schedule.dto.CreateScheduleRequest;
 import net.sckim.schedule.api.domain.schedule.dto.EditScheduleRequest;
+import net.sckim.schedule.api.domain.schedule.dto.SchedulePageResponse;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +44,11 @@ public class ScheduleController {
     @GetMapping("/schedules")
     public List<ScheduleResponse> getAllSchedules() {
         return scheduleService.getAllSchedule();
+    }
+
+    @GetMapping("/schedules/pages")
+    public Page<SchedulePageResponse> getScheduleList(@PageableDefault(size = 10, sort = "updatedAt", direction = Sort.Direction.DESC) final Pageable pageable) {
+        return scheduleService.getSchedulePages(pageable);
     }
 
     @PutMapping("/schedules/{scheduleId}")
