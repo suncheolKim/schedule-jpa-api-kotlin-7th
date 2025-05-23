@@ -42,7 +42,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResponse editSchedule(Long scheduleId, String name, String title, String contents) {
+    public ScheduleResponse editSchedule(Long scheduleId, String title, String contents) {
         final Schedule schedule = getScheduleOrThrow(scheduleId);
 
         schedule.edit(title, contents);

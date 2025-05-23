@@ -41,7 +41,7 @@ public class ScheduleController {
 
     @PutMapping("/schedules/{scheduleId}")
     public ScheduleResponse updateSchedule(@PathVariable Long scheduleId, @RequestBody EditScheduleRequest request) {
-        return scheduleService.editSchedule(scheduleId, request.getName(), request.getTitle(), request.getContents());
+        return scheduleService.editSchedule(scheduleId, request.getTitle(), request.getContents());
     }
 
     @DeleteMapping("/schedules/{scheduleId}")
