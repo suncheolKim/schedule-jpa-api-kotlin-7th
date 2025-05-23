@@ -1,5 +1,6 @@
 package net.sckim.schedule.api.domain.schedule;
 
+import jakarta.persistence.EntityNotFoundException;
 import net.sckim.schedule.api.domain.schedule.dto.ScheduleResponse;
 import net.sckim.schedule.api.domain.schedule.entity.Schedule;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,6 @@ public class ScheduleService {
 
     private Schedule getScheduleOrThrow(Long scheduleId) {
         return scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("Schedule not found. id = " + scheduleId));
+                .orElseThrow(() -> new EntityNotFoundException("Schedule not found. id = " + scheduleId));
     }
 }

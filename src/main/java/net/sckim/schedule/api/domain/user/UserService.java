@@ -1,5 +1,6 @@
 package net.sckim.schedule.api.domain.user;
 
+import jakarta.persistence.EntityNotFoundException;
 import net.sckim.schedule.api.security.PasswordEncoder;
 import net.sckim.schedule.api.domain.user.dto.LoginResponse;
 import net.sckim.schedule.api.domain.user.dto.UserResponse;
@@ -42,7 +43,7 @@ public class UserService {
 
     private User getUserOrElseThrow(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found. id = " + userId));
+                .orElseThrow(() -> new EntityNotFoundException("User not found. id = " + userId));
     }
 
     public List<UserResponse> getAllUsers() {
@@ -73,7 +74,7 @@ public class UserService {
 
     public LoginResponse login(String email, String password) {
         final User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("User not found. email = " + email));
+                .orElseThrow(() -> new EntityNotFoundException("User not found. email = " + email));
 
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
