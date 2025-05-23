@@ -1,4 +1,4 @@
-package net.sckim.schedule.api.domain.security;
+package net.sckim.schedule.api.security;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

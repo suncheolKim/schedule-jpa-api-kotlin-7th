@@ -1,7 +1,7 @@
 package net.sckim.schedule.api.config;
 
 import jakarta.servlet.Filter;
-import net.sckim.schedule.api.domain.security.LoginFilter;
+import net.sckim.schedule.api.security.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

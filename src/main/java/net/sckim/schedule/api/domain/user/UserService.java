@@ -1,6 +1,6 @@
 package net.sckim.schedule.api.domain.user;
 
-import net.sckim.schedule.api.domain.security.PasswordEncoder;
+import net.sckim.schedule.api.security.PasswordEncoder;
 import net.sckim.schedule.api.domain.user.dto.LoginResponse;
 import net.sckim.schedule.api.domain.user.dto.UserResponse;
 import net.sckim.schedule.api.domain.user.entity.User;
